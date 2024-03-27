@@ -9,7 +9,7 @@ import {
 
 function App() {
   return (
-    <div className="w-full h-screen bg-[url('images/background.png')] bg-cover bg-center bg-no-repeat p-3 bg-fixed">
+    <div className="w-full h-screen">
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />

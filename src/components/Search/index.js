@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -25,25 +25,21 @@ function Search() {
     }, 500);
   };
 
-  useEffect(() => {
-    console.log(search);
-  }, [search]);
-
   return (
     <div className="flex flex-col justify-center items-center h-full text-white px-5">
       <h1 className="text-[20px] font-bold font-Nunito">
         Welcome to <span className="text-[#8FB2F5]">TypeWeather</span>
       </h1>
-      <p className="text-sm text-[#BFBFD4] font-Nunito">
+      <p className="text-sm text-[#BFBFD4] font-Nunito whitespace-nowrap text-center">
         Choose a location to see the weather forecast
       </p>
       <input
         onChange={searchChange}
-        className="h-[56px] max-w-[500px] w-full px-5 rounded-lg bg-[#1E1E29] placeholder:font-Nunito placeholder:text-[#7F7F98] placeholder:text-base mt-[32px] outline-none text-[#a6a6c5]"
+        className="h-[56px] max-w-[311px] w-full px-5 rounded-lg bg-[#1E1E29] placeholder:font-Nunito placeholder:text-[#7F7F98] placeholder:text-base mt-[32px] outline-none text-[#a6a6c5]"
         placeholder="Search location"
       />
-
-      <div className="mt-2 max-w-[500px] w-full">
+ 
+      <div className="mt-2 max-w-[311px] w-full">
         {search[0] !== undefined &&
           search[0].name !== "Zara" &&
           search.map((data, i) => (
