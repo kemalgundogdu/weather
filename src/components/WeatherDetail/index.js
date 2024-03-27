@@ -51,7 +51,7 @@ function WeatherDetail() {
       setData(res.data);
       setWeather(res.data.weather[0]);
       setMain(res.data.main);
-      setWind(res.data.wind.speed);
+      setWind(res.data.wind.speed); 
       setCoord(res.data.coord);
     });
   }, [cityName]); // "cityName" değiştiğinde useEffect yeniden çalışacak
