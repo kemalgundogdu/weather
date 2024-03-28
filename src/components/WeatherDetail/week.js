@@ -10,12 +10,12 @@ import stormDay from "../../images/icons/Weather=Storm, Moment=Day.png";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
-function Week({ city }) {
+function Week({ lat, lon }) {
   const [list, setList] = useState([]);
 
   useEffect(() => {
     axios(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
     ).then((res) => {
       const dailyData = res.data.list.reduce((acc, item) => {
         const date = new Date(item.dt_txt);
@@ -40,7 +40,7 @@ function Week({ city }) {
 
       setList(dailyList.slice(0, 5));
     });
-  }, [city]);
+  }, [lat, lon]);
 
   const dynamicIcon = useCallback((e) => {
     switch (e) {

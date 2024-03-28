@@ -5,7 +5,7 @@ import {
   Wind,
   Drop,
   SunDim,
-} from "@phosphor-icons/react";
+} from "@phosphor-icons/react"; 
 
 function List({ main, wind, rain, uv }) {
   return (

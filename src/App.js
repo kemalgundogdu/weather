@@ -13,7 +13,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path=":name" element={<WeatherDetail />} />
+          <Route path=":lat/:lon" element={<WeatherDetail />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </Router>

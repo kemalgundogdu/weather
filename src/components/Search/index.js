@@ -43,15 +43,18 @@ function Search() {
 
       <div className="mt-2 max-w-[311px] w-full">
         {search[0] !== undefined &&
-          search.map((data, i) => (
-            <Link
-              key={i}
-              to={data.name}
-              className="mb-0.5 outline-none h-[54px] w-full px-5 rounded-lg bg-[#3b3b54] font-Nunito text-base flex items-center text-[#FAFAFA]"
-            >
-              {data.name}, {data.country}
-            </Link>
-          ))}
+          search.map((data, i) => {
+            // console.log(data);
+            return (
+              <Link
+                key={i}
+                to={`${data.lat}/${data.lon}`}
+                className="mb-0.5 outline-none h-[54px] w-full px-5 rounded-lg bg-[#3b3b54] font-Nunito text-base flex items-center text-[#FAFAFA]"
+              >
+                {data.name}, {data.country}
+              </Link>
+            )
+          })}
       </div>
     </div>
   );
