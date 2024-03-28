@@ -214,5 +214,5 @@ function WeatherDetail() {
     </div>
   );
 }
-
+ 
 export default WeatherDetail;
