@@ -2,12 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-// hava durumu api
-// https://api.openweathermap.org/data/2.5/weather?q=samsun&appid=dacda35d113a212c010a086da53d2832&units=metric
-
-// şehir api
-// https://api.openweathermap.org/geo/1.0/direct?q=samsun,%20TR&limit=3&appid=dacda35d113a212c010a086da53d2832
-
 function Search() {
   const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -15,13 +9,21 @@ function Search() {
 
   const searchChange = (e) => {
     setTimeout(() => {
+      if (e.target.value === "") {
+        setSearch([]);
+        return
+      }
       axios(
         `https://api.openweathermap.org/geo/1.0/direct?q=${e.target.value}, TR&limit=3&appid=${apiKey}`
-      ).then((res) =>
-        res.data.length === 1 && res.data.length > 2
-          ? setSearch([res.data[1]])
-          : setSearch([res.data[0]])
-      );
+      ).then((res) => {
+        if (res.data.length === 0) {
+          setSearch([]);
+        } else if (res.data.length === 1 && res.data.length > 2) {
+          setSearch([res.data[1]]);
+        } else {
+          setSearch([res.data[0]]);
+        }
+      });
     }, 500);
   };
 
@@ -38,10 +40,9 @@ function Search() {
         className="h-[56px] max-w-[311px] w-full px-5 rounded-lg bg-[#1E1E29] placeholder:font-Nunito placeholder:text-[#7F7F98] placeholder:text-base mt-[32px] outline-none text-[#a6a6c5]"
         placeholder="Search location"
       />
- 
+
       <div className="mt-2 max-w-[311px] w-full">
         {search[0] !== undefined &&
-          search[0].name !== "Zara" &&
           search.map((data, i) => (
             <Link
               key={i}

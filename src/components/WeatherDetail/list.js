@@ -9,7 +9,7 @@ import {
 
 function List({ main, wind, rain, uv }) {
   return (
-    <div>
+    <div className="w-full max-w-[359px] px-4 py-1 rounded-lg bg-[#16161F]">
       <div className="flex items-center justify-between h-[56px] border-b-[1px] border-b-[#1C1C27] gap-3">
         <div>
           <ThermometerSimple size={24} fill="#3B3B54" />
