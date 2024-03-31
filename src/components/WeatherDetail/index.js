@@ -4,7 +4,7 @@ import axios from "axios";
 import List from "./list";
 import Week from "./week";
 
-import { CaretLeft } from "@phosphor-icons/react";
+import { CaretLeft, FloppyDisk, TrashSimple } from "@phosphor-icons/react";
 
 import clearDay from "../../images/icons/Weather=Clear, Moment=Day.png";
 import clearNight from "../../images/icons/Weather=Clear, Moment=Night.png";
@@ -83,6 +83,15 @@ function WeatherDetail() {
       setBackground("bg-cloudyDay");
     }
     if (hours === "Night" && hava === "Cloudy") {
+      setIcon(cloudyNight);
+      setBackground("bg-cloudyNight");
+    }
+
+    if (hours === "Day" && hava === "Mist") {
+      setIcon(cloudyDay);
+      setBackground("bg-cloudyDay");
+    }
+    if (hours === "Night" && hava === "Mist") {
       setIcon(cloudyNight);
       setBackground("bg-cloudyNight");
     }
@@ -186,9 +195,59 @@ function WeatherDetail() {
     }
   }, [coord]);
 
+  const [buttonIcon, setButtonIcon] = useState(<FloppyDisk size={18} />);
+  const customStorageAdd = () => {
+    const cityData = {
+      name: data.name,
+      lat: lat,
+      lon: lon,
+    };
+
+    const cityDataString = JSON.stringify(cityData);
+    const existingCity = localStorage.getItem(cityDataString);
+
+    if (existingCity) {
+      localStorage.removeItem(cityDataString);
+      setButtonIcon(<FloppyDisk size={18} />);
+    } else {
+      localStorage.setItem(cityDataString, JSON.stringify(cityData));
+      setButtonIcon(<TrashSimple size={18} />);
+    }
+  };
+
+  useEffect(() => {
+    const allCities = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const city = JSON.parse(localStorage.getItem(localStorage.key(i)));
+      allCities.push(city);
+    }
+  }, []);
+
+  // şehir localstorage içinde kayıtlı mı sorgusu (buna göre buton tasarımında değişiklik yapılacak)
+  useEffect(() => {
+    const cityDataString = JSON.stringify({
+      name: data.name,
+      lat: lat,
+      lon: lon,
+    });
+    const cityExists = localStorage.getItem(cityDataString);
+
+    if (cityExists) {
+      // Şehir zaten kayıtlı
+      setButtonIcon(<TrashSimple size={18} />);
+    } else {
+      // Şehir kayıtlı değil
+      setButtonIcon(<FloppyDisk size={18} />);
+    }
+  }, [data, lat, lon]);
+
   return (
     <div className="w-full flex flex-col justify-center items-center text-white p-2">
-      {loading && <div className="w-full h-screen flex items-center justify-center text-gray-300 text-xs">Loading...</div>}
+      {loading && (
+        <div className="w-full h-screen flex items-center justify-center text-gray-300 text-xs">
+          Loading...
+        </div>
+      )}
       {errorStatus && (
         <div className="w-full max-w-[359px] h-screen flex flex-col items-center justify-center">
           <div className="flex w-full justify-start items-center m-1 font-medium py-1 px-2 rounded-md text-red-500 bg-red-50 border border-red-200 ">
@@ -229,7 +288,7 @@ function WeatherDetail() {
       )}
       {!loading && !errorStatus && (
         <div>
-          <div className="w-full max-w-[359px] p-3 rounded-lg bg-[#16161F] mb-2">
+          <div className="w-full max-w-[359px] p-3 rounded-lg bg-[#16161F] mb-2 relative">
             <div className={`w-full h-[328px] rounded-lg ${background}`}>
               <div className="w-full h-full flex flex-col items-start justify-between">
                 <div className="flex flex-col font-Nunito p-5">
@@ -263,6 +322,12 @@ function WeatherDetail() {
                 </div>
               </div>
             </div>
+            <button
+              onClick={customStorageAdd}
+              className={`absolute top-8 right-6 bg-transparent text-white border-0 outline-none rounded p-2`}
+            >
+              {buttonIcon}
+            </button>
           </div>
           <List main={main} wind={wind} rain={rain} uv={uv} />
           <Week lat={lat} lon={lon} dynamicIcon={dynamicIcon} />

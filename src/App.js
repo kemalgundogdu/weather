@@ -1,4 +1,5 @@
 import Home from "./components/Home";
+import Saved from "./components/Saved";
 import WeatherDetail from "./components/WeatherDetail";
 
 import {
@@ -13,6 +14,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/saved" element={<Saved />} />
           <Route path=":lat/:lon" element={<WeatherDetail />} />
           <Route path="*" element={<Home />} />
         </Routes>
